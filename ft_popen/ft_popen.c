@@ -9,7 +9,8 @@ int ft_popen(const char *file, char *const argv[], char type)
         return (-1);
     if ((pid = fork()) == -1)
     {
-        close(p[0]); close(p[1]);
+        close(p[0]);
+		close(p[1]);
     }
     if (pid == 0)
     {
