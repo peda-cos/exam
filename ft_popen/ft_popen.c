@@ -3,32 +3,34 @@
 
 int ft_popen(const char *file, char *const argv[], char type)
 {
-    int p[2], pid;
+    int fd[2], pid;
 
-    if (!file || !argv || (type != 'r' && type != 'w') || pipe(p) == -1)
-        return (-1);
-    if ((pid = fork()) == -1)
+    if(!file || !argv || (type != 'r' && type != 'w') || pipe(fd)== -1)
+        return(-1);
+    if((pid = fork()) == -1)
     {
-        close(p[0]);
-		close(p[1]);
+        close(fd[0]);
+        close(fd[1]);
     }
-    if (pid == 0)
+    if(pid == 0)
     {
-        if (type == 'r')
-            dup2(p[1], 1);
+        if(type == 'r')
+			dup2(fd[1], 1);
         else
-            dup2(p[0], 0);
-
-        close(p[0]);
-		close(p[1]);
+        	dup2(fd[0], 0);
+        close(fd[0]);
+        close(fd[1]);
         execvp(file, argv);
         exit(1);
     }
-    if (type == 'r')
+    else
     {
-        close(p[1]);
-        return (p[0]);
+        if(type == 'r')
+        {
+            close(fd[1]);
+            return(fd[0]);
+        }
+        close(fd[0]);
+        return(fd[1]);
     }
-    close(p[0]);
-    return (p[1]);
 }
