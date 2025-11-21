@@ -14,5 +14,5 @@ int main(void)
     int ret = picoshell(cmds);
 
     printf("Retorno da picoshell: %d\n", ret);
-    return ret;
+    return (ret);
 }
