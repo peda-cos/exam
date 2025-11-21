@@ -5,7 +5,7 @@ int ft_popen(const char *file, char *const argv[], char type)
 {
     int fd[2], pid;
 
-    if(!file || !argv || (type != 'r' && type != 'w') || pipe(fd)== -1)
+    if(!file || !argv || (type != 'r' && type != 'w') || pipe(fd) == -1)
         return(-1);
     if((pid = fork()) == -1)
     {
