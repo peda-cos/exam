@@ -1,6 +1,7 @@
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
+
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 
 int min3(int a, int b, int c) {
     int m = a < b ? a : b;
