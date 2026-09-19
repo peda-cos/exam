@@ -11,8 +11,8 @@ public:
 
     int getX() const { return _x; }
     int getY() const { return _y; }
-    int& operator[](size_t i) { return i ? _y : _x; }
-    const int& operator[](size_t i) const { return i ? _y : _x; }
+    int& operator[](int i) { return i ? _y : _x; }
+    const int& operator[](int i) const { return i ? _y : _x; }
 
     vect2 operator+(const vect2& o) const { return vect2(_x + o._x, _y + o._y); }
     vect2 operator-(const vect2& o) const { return vect2(_x - o._x, _y - o._y); }
