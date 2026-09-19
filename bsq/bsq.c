@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+#include "bsq.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -24,10 +26,10 @@ void solve(FILE *fp) {
 
     for (int i = 0; i < rows; ++i) {
         ssize_t len = getline(&line, &cap, fp);
-        if (len <= 0) { fprintf(stderr, "map error\n"); free(line); free(grid); return; }
+        if (len <= 0) { fprintf(stderr, "map error\n"); free(line); for (int k = 0; k < i; ++k) free(grid[k]); free(grid); return; }
         if (line[len - 1] == '\n') line[--len] = '\0';
         if (i == 0) cols = len;
-        if (len != cols || cols <= 0) { fprintf(stderr, "map error\n"); free(line); free(grid); return; }
+        if (len != cols || cols <= 0) { fprintf(stderr, "map error\n"); free(line); for (int k = 0; k < i; ++k) free(grid[k]); free(grid); return; }
         for (int j = 0; j < cols; ++j) {
             if (line[j] != emp && line[j] != obs) {
                 fprintf(stderr, "map error\n");
@@ -68,7 +70,7 @@ void solve(FILE *fp) {
             grid[r][c] = full;
 
     for (int r = 0; r < rows; ++r) {
-        puts(grid[r]);
+        fprintf(stdout, "%s\n", grid[r]);
         free(grid[r]);
         free(dp[r]);
     }
@@ -80,7 +82,7 @@ int main(int ac, char **av) {
     if (ac == 1) solve(stdin);
     else {
         for (int i = 1; i < ac; ++i) {
-            if (i > 1) putchar('\n');
+            if (i > 1) fprintf(stdout, "\n");
             FILE *f = fopen(av[i], "r");
             if (f) { solve(f); fclose(f); }
             else fprintf(stderr, "map error\n");
